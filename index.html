@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://t4.ftcdn.net/jpg/06/91/05/19/360_F_691051962_GFhQPOAXABmf7l706q89b2PFh6FnB1kI.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            box-sizing: border-box;
+            height: 100%;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c4757;
+            margin: 0 0 20px 0;
+            font-size: 28px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #131313;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="date"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #356e65;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #4B0082;
+            background-color: #f8f8ff;
+            box-sizing: border-box;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #4B0082;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #39706c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #387444;
+        }
+
+        .signup_link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .signup_link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup_link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="center">
+        <h1>Student Registration Form</h1>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <div class="password-container">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('password', this)">👁️</span>
+            </div>
+
+            <div class="password-container">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword', this)">👁️</span>
+            </div>
+
+            <button type="submit">Register</button>
+            <div class="signup_link">
+                Have an Account? <a href="#">Login Here</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function togglePasswordVisibility(fieldId, toggleIcon) {
+            const field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+                toggleIcon.textContent = "👁️‍🗨️";
+            } else {
+                field.type = "password";
+                toggleIcon.textContent = "👁️";
+            }
+        }
+
+        function validateForm() {
+            const firstName = document.getElementById('firstName').value;
+            if (!/^[A-Za-z][A-Za-z ]*$/.test(firstName)) {
+                alert("First name should start with an alphabet and only contain letters and spaces.");
+                return false;
+            }
+
+            const lastName = document.getElementById('lastName').value;
+            if (!/^[A-Za-z][A-Za-z ]*$/.test(lastName)) {
+                alert("Last name should start with an alphabet and only contain letters and spaces.");
+                return false;
+            }
+
+            const phone = document.getElementById('phone').value;
+            if (!/^\d{10}$/.test(phone)) {
+                alert("Phone number must be exactly 10 digits.");
+                return false;
+            }
+
+            const dob = document.getElementById('dob').value;
+            const dobDate = new Date(dob);
+            const today = new Date();
+            if (dobDate >= today) {
+                alert("Date of birth should be before today.");
+                return false;
+            }
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            alert("Form submitted successfully!");
+            return true;
+        }
+    </script>
+
+</body>
+</html>
